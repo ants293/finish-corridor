@@ -5,7 +5,7 @@ export default (state = INITIAL_STATE, action) => {
         case 'UPDATE_FINISH_CORRIDOR':
             return {
                 ...state,
-                timingsList: action.payload
+                timingsList: [...state.timingsList, ...action.payload]
             };
         default:
             return state
