@@ -1,9 +1,15 @@
 import VirtualizedTable from "../shared/VirtualizedTable/VirtualizedTable";
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
+import { updateFinishCorridorList } from "../../actions/FinishCorridorActions";
 
 function FinishCorridor(props) {
-    const { timingsList } = props;
+    const { timingsList, updateTimingsList } = props;
+
+    useEffect(() => {
+        updateTimingsList()
+        }, []
+    );
 
     return (
         <VirtualizedTable
@@ -13,7 +19,7 @@ function FinishCorridor(props) {
                 headerHeight: 20
             }}
         />
-        )
+    )
 }
 
 const mapStateToProps = (state) => {
@@ -22,4 +28,10 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, null)(FinishCorridor);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        updateTimingsList: () => updateFinishCorridorList(dispatch),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(FinishCorridor);
