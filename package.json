@@ -6,8 +6,11 @@
     "faker": "^4.1.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
+    "react-redux": "^7.1.1",
     "react-scripts": "3.2.0",
     "react-virtualized": "^9.21.1",
+    "redux": "^4.0.4",
+    "redux-thunk": "^2.3.0",
     "socket.io-client": "^2.3.0"
   },
   "scripts": {
