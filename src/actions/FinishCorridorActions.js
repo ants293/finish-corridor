@@ -4,7 +4,7 @@ import { WS_API_URL } from "../config/Config";
 
 const socket = socketIOClient(WS_API_URL);
 
-const setTimingsListWatcher = (dispatch) => {
+const setCapturesWatcher = (dispatch) => {
     socket.on("connect", () =>  {
         console.log("connected");
     });
@@ -26,4 +26,4 @@ const setReadersWatcher = (dispatch) => {
     });
 };
 
-export { setTimingsListWatcher, setReadersWatcher }
+export { setCapturesWatcher, setReadersWatcher }

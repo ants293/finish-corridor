@@ -1,7 +1,7 @@
 import { UPDATE_FINISH_CORRIDOR, UPDATE_READERS } from "../types/FinishCorridorTypes";
 
 const INITIAL_STATE  = {
-    timingsList: [],
+    capturesList: [],
     readers: [],
 };
 
@@ -15,7 +15,7 @@ export default (state = INITIAL_STATE, action) => {
         case UPDATE_FINISH_CORRIDOR:
             return {
                 ...state,
-                timingsList: [...action.payload, ...state.timingsList],
+                capturesList: [...action.payload, ...state.capturesList],
             };
         default:
             return state
