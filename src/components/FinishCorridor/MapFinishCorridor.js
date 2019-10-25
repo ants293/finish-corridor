@@ -7,7 +7,7 @@ export const MapFinishCorridor = (initialCapturesList, finishLineReader) => {
 
     for (let capture of initialCapturesList) {
         const foundCaptureArrayIndex = findAthleteInPresentList(capture.athlete.number);
-        const finalCaptureTime = getCurrentCaptureTime(capture);
+        const finalCaptureTime = getFinalCaptureTime(capture);
         const captureWithRelevantTimeValue = giveCaptureRelevantTimeValue(capture, finalCaptureTime);
 
         if(foundCaptureArrayIndex === -1) {
@@ -25,7 +25,7 @@ export const MapFinishCorridor = (initialCapturesList, finishLineReader) => {
         return setCaptureInfo(item);
     });
 
-    function getCurrentCaptureTime(capture) {
+    function getFinalCaptureTime(capture) {
         return capture.reader_id === finishLineReader ? capture.captured : null;
     }
 
