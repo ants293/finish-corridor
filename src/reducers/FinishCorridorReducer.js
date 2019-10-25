@@ -15,13 +15,9 @@ export default (state = INITIAL_STATE, action) => {
         case UPDATE_FINISH_CORRIDOR:
             return {
                 ...state,
-                timingsList: handleNewList([...state.timingsList, action.payload]),
+                timingsList: [...action.payload, ...state.timingsList],
             };
         default:
             return state
     }
 }
-
-const handleNewList = (list) => {
-    return list;
-};

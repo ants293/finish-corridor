@@ -10,12 +10,10 @@ const setTimingsListWatcher = (dispatch) => {
     });
 
     socket.on('captures', (data) => {
-        if (data.length === 1) {
-            dispatch({
-                type: UPDATE_FINISH_CORRIDOR,
-                payload: mapRecievedCapture(data[0]),
-            })
-        }
+        dispatch({
+            type: UPDATE_FINISH_CORRIDOR,
+            payload: data,
+        })
     });
 };
 
@@ -26,14 +24,6 @@ const setReadersWatcher = (dispatch) => {
             payload: data,
         });
     });
-};
-
-const mapRecievedCapture = (item) => {
-    return {
-        number: item.athlete.number,
-        name: item.athlete.name,
-        time: item.captured,
-    };
 };
 
 export { setTimingsListWatcher, setReadersWatcher }
