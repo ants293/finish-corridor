@@ -7,7 +7,8 @@ function FinishCorridor(props) {
     const { timingsList, updateTimingsList } = props;
 
     useEffect(() => {
-        updateTimingsList()
+        updateTimingsList();
+        updateReaders();
         }, []
     );
 
@@ -24,13 +25,15 @@ function FinishCorridor(props) {
 
 const mapStateToProps = (state) => {
     return {
-        timingsList: state.finishCorridor.timingsList
+        timingsList: state.finishCorridor.timingsList,
+        readers: state.finishCorridor.readers,
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
         updateTimingsList: () => updateFinishCorridorList(dispatch),
+        updateReaders: () => updateReaders(dispatch),
     };
 };
 
