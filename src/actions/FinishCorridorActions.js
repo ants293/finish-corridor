@@ -4,7 +4,7 @@ import { WS_API_URL } from "../config/Config";
 
 const socket = socketIOClient(WS_API_URL);
 
-const updateFinishCorridorList = (dispatch) => {
+const setTimingsListWatcher = (dispatch) => {
     socket.on("connect", () =>  {
         console.log("connected");
     });
@@ -19,7 +19,7 @@ const updateFinishCorridorList = (dispatch) => {
     });
 };
 
-const updateReaders = (dispatch) => {
+const setReadersWatcher = (dispatch) => {
     socket.on('readers', (data) => {
         dispatch({
             type: UPDATE_READERS,
@@ -36,4 +36,4 @@ const mapRecievedCapture = (item) => {
     };
 };
 
-export { updateFinishCorridorList, updateReaders }
+export { setTimingsListWatcher, setReadersWatcher }

@@ -1,16 +1,18 @@
 import VirtualizedTable from "../shared/VirtualizedTable/VirtualizedTable";
-import React, { useEffect } from "react";
-import { connect } from "react-redux";
-import { updateFinishCorridorList } from "../../actions/FinishCorridorActions";
+import React, { useEffect, useRef } from "react";
 
-function FinishCorridor(props) {
-    const { timingsList, updateTimingsList } = props;
+const FinishCorridor = (props) => {
+    const { timingsList, readers, setReadersWatcher, setTimingsListWatcher } = props;
+    const mounted = useRef();
 
     useEffect(() => {
-        updateTimingsList();
-        updateReaders();
-        }, []
-    );
+        if(!mounted.current) {
+            mounted.current = true;
+            setReadersWatcher();
+            setTimingsListWatcher();
+        }
+        console.log(readers);
+    });
 
     return (
         <VirtualizedTable
@@ -23,18 +25,6 @@ function FinishCorridor(props) {
     )
 }
 
-const mapStateToProps = (state) => {
-    return {
-        timingsList: state.finishCorridor.timingsList,
-        readers: state.finishCorridor.readers,
-    };
-};
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        updateTimingsList: () => updateFinishCorridorList(dispatch),
-        updateReaders: () => updateReaders(dispatch),
-    };
-};
 
-export default connect(mapStateToProps, mapDispatchToProps)(FinishCorridor);
+export default FinishCorridor;
