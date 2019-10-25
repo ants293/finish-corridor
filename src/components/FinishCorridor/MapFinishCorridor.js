@@ -1,30 +1,37 @@
-export const MapFinishCorridor = (timingsList, finishLineReader) => {
-    let newList = [];
+export const MapFinishCorridor = (initialCapturesList, finishLineReader) => {
+    let mappedCaptureList = [];
 
-    if (!finishLineReader || !timingsList.length) {
-        return timingsList;
+    if (!finishLineReader || !initialCapturesList.length) {
+        return initialCapturesList;
     }
 
-    for (let capture of timingsList) {
-        const foundCaptureArrayIndex = findAthleteInPresentList(newList, capture.athlete.number);
+    for (let capture of initialCapturesList) {
+        const foundCaptureArrayIndex = findAthleteInPresentList(capture.athlete.number);
         const finalCaptureTime = getCurrentCaptureTime(capture);
+        const captureWithRelevantTimeValue = giveCaptureRelevantTimeValue(capture, finalCaptureTime);
 
         if(foundCaptureArrayIndex === -1) {
-            newList.push(giveCaptureRelevantTimeValue(capture, finalCaptureTime));
+            mappedCaptureList.push(captureWithRelevantTimeValue);
         } else {
+            // Negates the situation where some athletes wont have a time by the end of the race.
+            // For some strange reason API showed some athletes who reached the finish line first and the actual corridor start last. Probably cheaters or running in the opposite direction.
             if (finalCaptureTime) {
-                newList[foundCaptureArrayIndex] = giveCaptureRelevantTimeValue(capture, finalCaptureTime);
+                mappedCaptureList[foundCaptureArrayIndex] = captureWithRelevantTimeValue;
             }
         }
     }
+
+    return orderList(mappedCaptureList).map(item =>  {
+        return setCaptureInfo(item);
+    });
 
     function getCurrentCaptureTime(capture) {
         return capture.reader_id === finishLineReader ? capture.captured : null;
     }
 
-    return orderList(newList).map(item =>  {
-        return setTableRowInfo(item);
-    });
+    function findAthleteInPresentList(athleteNumber) {
+        return mappedCaptureList.findIndex(x => x.athlete.number === athleteNumber);
+    }
 
 };
 
@@ -44,14 +51,10 @@ const giveCaptureRelevantTimeValue = (capture, finalCaptureValue) => {
     }
 };
 
-const findAthleteInPresentList = (newList, athleteNumber) => {
-    return newList.findIndex(x => x.athlete.number === athleteNumber);
-};
-
-const setTableRowInfo = (item) => {
+const setCaptureInfo = (capture) => {
     return {
-        number: item.athlete.number,
-        name: item.athlete.name,
-        time: item.captured,
+        number: capture.athlete.number,
+        name: capture.athlete.name,
+        time: capture.captured,
     };
 };
