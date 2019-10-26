@@ -2,6 +2,8 @@ import VirtualizedTable from '../shared/VirtualizedTable/VirtualizedTable'
 import React, { useEffect, useRef } from 'react'
 import { MapFinishCorridor } from './MapFinishCorridor'
 import PropTypes from 'prop-types'
+import { isTabInactive, visibilityChange } from '../../Utilities/TabVisiblityHandler'
+import { closeSocketConnection, openSocketConnection } from '../../config/Websocket'
 
 const FinishCorridor = (props) => {
   const { capturesList, readers, setReadersWatcher, setCapturesWatcher } = props
@@ -12,8 +14,13 @@ const FinishCorridor = (props) => {
   useEffect(() => {
     if (!mounted.current) {
       mounted.current = true
+
       setReadersWatcher()
       setCapturesWatcher()
+      document.addEventListener(visibilityChange, changeInTabVisiblity)
+    }
+    return () => {
+      window.removeEventListener(visibilityChange, changeInTabVisiblity)
     }
   })
 
@@ -33,6 +40,12 @@ FinishCorridor.propTypes = {
   readers: PropTypes.array,
   setReadersWatcher: PropTypes.func,
   setCapturesWatcher: PropTypes.func
+}
+
+const changeInTabVisiblity = () => {
+  const inactiveTab = isTabInactive()
+
+  inactiveTab ? closeSocketConnection() : openSocketConnection()
 }
 
 export default FinishCorridor
