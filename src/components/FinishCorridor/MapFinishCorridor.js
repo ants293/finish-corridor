@@ -1,59 +1,50 @@
-export const MapFinishCorridor = (initialCapturesList, finishLineReader) => {
-  const mappedCaptureList = []
+import { replaceItemInArray } from '../../Utilities/Utilities'
 
+export const MapFinishCorridor = (initialCapturesList, finishLineReader) => {
   if (!finishLineReader || !initialCapturesList.length) {
     return initialCapturesList
   }
 
-  for (const capture of initialCapturesList) {
-    const foundCaptureArrayIndex = findAthleteInPresentList(capture.athlete.number)
-    const finalCaptureTime = getFinalCaptureTime(capture)
-    const captureWithRelevantTimeValue = giveCaptureRelevantTimeValue(capture, finalCaptureTime)
+  const captureList = removeDuplicateEntries([...initialCapturesList], finishLineReader)
 
-    if (foundCaptureArrayIndex === -1) {
-      mappedCaptureList.push(captureWithRelevantTimeValue)
+  return orderList(captureList.map(capture => {
+    return mapObjectforTable(capture, finishLineReader)
+  }))
+}
+
+const removeDuplicateEntries = (list, finishLineReader) => {
+  let newList = []
+
+  for (const entry of list) {
+    const indexInNewArray = newList.findIndex(({athlete}) => {
+      return athlete.number === entry.athlete.number
+    })
+    if (indexInNewArray === -1) {
+      newList.push(entry)
     } else {
-      // Negates the situation where some athletes wont have a time by the end of the race.
-      // For some strange reason API showed some athletes who reached the finish line first and the actual corridor start last. Probably cheaters or running in the opposite direction.
-      if (finalCaptureTime) {
-        mappedCaptureList[foundCaptureArrayIndex] = captureWithRelevantTimeValue
+      if (finishLineReader === entry.reader_id) {
+        newList = replaceItemInArray(newList, indexInNewArray, entry)
       }
     }
   }
 
-  return orderList(mappedCaptureList).map(item => {
-    return setCaptureInfo(item)
-  })
-
-  function getFinalCaptureTime (capture) {
-    return capture.reader_id === finishLineReader ? capture.captured : null
-  }
-
-  function findAthleteInPresentList (athleteNumber) {
-    return mappedCaptureList.findIndex(({ athlete }) => athlete.number === athleteNumber)
-  }
+  return newList
 }
 
 const orderList = (list) => {
   return list.sort((a, b) => {
-    if (!b.captured) {
+    if (!b.time) {
       return 1
     }
-    return new Date(a.captured) - new Date(b.captured)
+    return new Date(a.time) - new Date(b.time)
   })
 }
 
-const giveCaptureRelevantTimeValue = (capture, finalCaptureValue) => {
-  return {
-    ...capture,
-    captured: finalCaptureValue
-  }
-}
-
-const setCaptureInfo = (capture) => {
+const mapObjectforTable = (capture, finishLineReader) => {
   return {
     number: capture.athlete.number,
     name: capture.athlete.name,
-    time: capture.captured
+    time: capture.reader_id === finishLineReader ? capture.captured : null,
+    readerId: capture.reader_id
   }
 }
