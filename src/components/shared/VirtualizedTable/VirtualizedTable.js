@@ -52,9 +52,9 @@ const createDefaultColumn = (key) => {
 }
 
 VirtualizedTable.propTypes = {
-  options: {
-    list: PropTypes.array,
-    headerHeight: PropTypes.number,
-    rowHeight: PropTypes.number
-  }
+  options: PropTypes.shape({
+    list: PropTypes.array.isRequired,
+    headerHeight: PropTypes.number.isRequired,
+    rowHeight: PropTypes.number.isRequired
+  })
 }

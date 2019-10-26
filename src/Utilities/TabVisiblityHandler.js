@@ -1,5 +1,7 @@
 let hidden, visibilityChange
 
+// Values taken from documentation, dependent on browser
+
 if (typeof document.hidden !== 'undefined') {
   hidden = 'hidden'
   visibilityChange = 'visibilitychange'

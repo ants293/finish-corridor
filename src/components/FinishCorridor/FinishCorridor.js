@@ -20,12 +20,13 @@ const FinishCorridor = (props) => {
       document.addEventListener(visibilityChange, changeInTabVisiblity)
     }
     return () => {
-      window.removeEventListener(visibilityChange, changeInTabVisiblity)
+      document.removeEventListener(visibilityChange, changeInTabVisiblity)
     }
   })
 
   return (
     <VirtualizedTable
+      wat={"dsasd"}
       options={{
         list: mappedCapturesList,
         rowHeight: 20,
