@@ -5,18 +5,18 @@ export const MapFinishCorridor = (initialCapturesList, finishLineReader) => {
     return initialCapturesList
   }
 
-  const captureList = removeDuplicateEntries([...initialCapturesList], finishLineReader)
+  const captureList = createListWithRelevantEntries([...initialCapturesList], finishLineReader)
 
   return orderList(captureList.map(capture => {
     return mapObjectforTable(capture, finishLineReader)
   }))
 }
 
-const removeDuplicateEntries = (list, finishLineReader) => {
+const createListWithRelevantEntries = (list, finishLineReader) => {
   let newList = []
 
   for (const entry of list) {
-    const indexInNewArray = newList.findIndex(({athlete}) => {
+    const indexInNewArray = newList.findIndex(({ athlete }) => {
       return athlete.number === entry.athlete.number
     })
     if (indexInNewArray === -1) {
