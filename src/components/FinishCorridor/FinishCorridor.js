@@ -26,7 +26,6 @@ const FinishCorridor = (props) => {
 
   return (
     <VirtualizedTable
-      wat={"dsasd"}
       options={{
         list: mappedCapturesList,
         rowHeight: 20,
