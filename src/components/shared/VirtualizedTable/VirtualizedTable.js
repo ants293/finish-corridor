@@ -1,6 +1,8 @@
 import React from 'react'
 import { AutoSizer, Column, Table } from 'react-virtualized'
 import PropTypes from 'prop-types'
+import VirtualizedColumn from './VirtualizedColumn/VirtualizedColumn'
+import VirtualizedHeader from './VirtualizedHeader/VirtualizedHeader'
 
 export default function VirtualizedTable ({ options }) {
   const { list, headerHeight, rowHeight } = options
@@ -32,23 +34,30 @@ const createColumns = (list) => {
   for (const columnKey in listItem) {
     if (listItem.hasOwnProperty(columnKey)) {
       columns.push(
-        createDefaultColumn(columnKey)
+        <Column
+          label={columnKey}
+          dataKey={columnKey}
+          key={columnKey}
+          width={200}
+          headerRenderer={headerProps => (
+            VirtualizedHeader({
+              ...headerProps
+            })
+          )}
+          cellRenderer = {
+            ({ cellData }) => (
+              <VirtualizedColumn
+                cellData={cellData}
+              />
+            )
+          }
+        />
+
       )
     }
   }
 
   return columns
-}
-
-const createDefaultColumn = (key) => {
-  return (
-    <Column
-      key={key}
-      width={200}
-      dataKey={key}
-      label={key}
-    />
-  )
 }
 
 VirtualizedTable.propTypes = {
