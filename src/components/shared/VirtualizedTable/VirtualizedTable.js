@@ -5,7 +5,7 @@ import VirtualizedColumn from './VirtualizedColumn/VirtualizedColumn'
 import VirtualizedHeader from './VirtualizedHeader/VirtualizedHeader'
 
 export default function VirtualizedTable ({ options }) {
-  const { list, headerHeight, rowHeight } = options
+  const { list, headerHeight, rowHeight, columnValues } = options
 
   return (
     <div style={{ height: '100vh' }}>
@@ -19,7 +19,7 @@ export default function VirtualizedTable ({ options }) {
             rowCount={list.length}
             rowGetter={({ index }) => list[index]}
           >
-            {createColumns(list)}
+            {createColumns(list, columnValues)}
           </Table>
         )}
       </AutoSizer>
@@ -27,43 +27,40 @@ export default function VirtualizedTable ({ options }) {
   )
 }
 
-const createColumns = (list) => {
-  const columns = []
-  const listItem = list[0]
-
-  for (const columnKey in listItem) {
-    if (listItem.hasOwnProperty(columnKey)) {
-      columns.push(
-        <Column
-          label={columnKey}
-          dataKey={columnKey}
-          key={columnKey}
-          width={200}
-          headerRenderer={headerProps => (
-            VirtualizedHeader({
-              ...headerProps
-            })
-          )}
-          cellRenderer = {
-            ({ cellData }) => (
-              <VirtualizedColumn
-                cellData={cellData}
-              />
-            )
-          }
-        />
-
-      )
-    }
-  }
-
-  return columns
+const createColumns = (list, columnValues) => {
+  return columnValues.map(({ dataKey, width }) => {
+    return (
+      <Column
+        label={dataKey}
+        dataKey={dataKey}
+        key={dataKey}
+        width={width}
+        headerRenderer={headerProps => (
+          VirtualizedHeader({
+            ...headerProps
+          })
+        )}
+        cellRenderer = {
+          ({ cellData }) => (
+            <VirtualizedColumn
+              cellData={cellData}
+            />
+          )
+        }
+      />
+    )
+  })
 }
 
 VirtualizedTable.propTypes = {
   options: PropTypes.shape({
     list: PropTypes.array.isRequired,
     headerHeight: PropTypes.number.isRequired,
-    rowHeight: PropTypes.number.isRequired
-  })
+    rowHeight: PropTypes.number.isRequired,
+    columnValues: PropTypes.shape({
+      width: PropTypes.number.isRequired,
+      dataKey: PropTypes.string.isRequired,
+      label: PropTypes.string
+    }).isRequired
+  }).isRequired
 }

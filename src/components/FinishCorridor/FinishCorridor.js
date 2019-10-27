@@ -4,6 +4,7 @@ import { MapFinishCorridor } from './MapFinishCorridor'
 import PropTypes from 'prop-types'
 import { isTabInactive, visibilityChange } from '../../Utilities/TabVisiblityHandler'
 import { closeSocketConnection, openSocketConnection } from '../../config/Websocket'
+import { FinishCorridorTableColumns } from './FinishCorridorTableColumns'
 
 const FinishCorridor = (props) => {
   const { capturesList, readers, setReadersWatcher, setCapturesWatcher } = props
@@ -27,6 +28,7 @@ const FinishCorridor = (props) => {
   return (
     <VirtualizedTable
       options={{
+        columnValues: FinishCorridorTableColumns,
         list: mappedCapturesList,
         rowHeight: 20,
         headerHeight: 20
