@@ -1,6 +1,7 @@
 import React from 'react'
-import { AutoSizer, Column, Table } from 'react-virtualized'
 import PropTypes from 'prop-types'
+
+import { AutoSizer, Column, Table } from 'react-virtualized'
 import VirtualizedColumn from './VirtualizedColumn/VirtualizedColumn'
 import VirtualizedHeader from './VirtualizedHeader/VirtualizedHeader'
 
@@ -42,9 +43,9 @@ const createColumns = (list, columnValues) => {
         )}
         cellRenderer = {
           ({ cellData }) => (
-            <VirtualizedColumn
-              cellData={cellData}
-            />
+            VirtualizedColumn({
+              cellData
+            })
           )
         }
       />
@@ -57,10 +58,10 @@ VirtualizedTable.propTypes = {
     list: PropTypes.array.isRequired,
     headerHeight: PropTypes.number.isRequired,
     rowHeight: PropTypes.number.isRequired,
-    columnValues: PropTypes.shape({
+    columnValues: PropTypes.arrayOf(PropTypes.shape({
       width: PropTypes.number.isRequired,
       dataKey: PropTypes.string.isRequired,
       label: PropTypes.string
-    }).isRequired
+    })).isRequired
   }).isRequired
 }

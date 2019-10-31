@@ -1,6 +1,7 @@
-import { setCapturesWatcher, setReadersWatcher } from '../../actions/FinishCorridorActions'
 import { connect } from 'react-redux'
 import Component from './FinishCorridor'
+
+import { setCapturesWatcher, setReadersWatcher } from '../../actions/FinishCorridorActions'
 
 const mapStateToProps = (state) => {
   return {

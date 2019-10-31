@@ -1,4 +1,5 @@
-let hidden, visibilityChange
+let hidden
+let visibilityChange
 
 // Values taken from documentation, dependent on browser
 

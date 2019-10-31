@@ -1,34 +1,30 @@
-import VirtualizedTable from '../shared/VirtualizedTable/VirtualizedTable'
-import React, { useEffect, useRef } from 'react'
-import { MapFinishCorridor } from './MapFinishCorridor'
 import PropTypes from 'prop-types'
+import React, { useEffect } from 'react'
+
+import VirtualizedTable from '../shared/VirtualizedTable/VirtualizedTable'
+import { CreateFinishCorridorList } from './CreateFinishCorridorList'
 import { isTabInactive, visibilityChange } from '../../Utilities/TabVisiblityHandler'
 import { closeSocketConnection, openSocketConnection } from '../../config/Websocket'
-import { FinishCorridorTableColumns } from './FinishCorridorTableColumns'
+import { CreateFinishCorridorTableColumns } from './CreateFinishCorridorTableColumns'
 
 const FinishCorridor = (props) => {
   const { capturesList, readers, setReadersWatcher, setCapturesWatcher } = props
   const finishLineReaderId = readers.length ? readers[1].id : null
-  const mappedCapturesList = MapFinishCorridor(capturesList, finishLineReaderId)
-  const mounted = useRef()
+  const mappedCapturesList = CreateFinishCorridorList(capturesList, finishLineReaderId)
 
   useEffect(() => {
-    if (!mounted.current) {
-      mounted.current = true
-
-      setReadersWatcher()
-      setCapturesWatcher()
-      document.addEventListener(visibilityChange, changeInTabVisiblity)
-    }
+    setReadersWatcher()
+    setCapturesWatcher()
+    document.addEventListener(visibilityChange, handleChangeInTabVisibility)
     return () => {
-      document.removeEventListener(visibilityChange, changeInTabVisiblity)
+      document.removeEventListener(visibilityChange, handleChangeInTabVisibility)
     }
-  })
+  }, [setCapturesWatcher, setReadersWatcher])
 
   return (
     <VirtualizedTable
       options={{
-        columnValues: FinishCorridorTableColumns,
+        columnValues: CreateFinishCorridorTableColumns,
         list: mappedCapturesList,
         rowHeight: 20,
         headerHeight: 20
@@ -44,8 +40,9 @@ FinishCorridor.propTypes = {
   setCapturesWatcher: PropTypes.func
 }
 
-const changeInTabVisiblity = () => {
+const handleChangeInTabVisibility = () => {
   const inactiveTab = isTabInactive()
+  console.log('handled')
 
   inactiveTab ? closeSocketConnection() : openSocketConnection()
 }
