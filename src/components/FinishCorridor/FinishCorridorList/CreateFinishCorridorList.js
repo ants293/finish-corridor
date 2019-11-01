@@ -7,7 +7,10 @@ export const CreateFinishCorridorList = (initialCapturesList, finishLineReader) 
     return initialCapturesList
   }
 
-  const captureList = orderList(createListWithRelevantEntries([...initialCapturesList], finishLineReader), finishLineReader)
+  const captureList = orderList(
+    createListWithRelevantEntries([...initialCapturesList], finishLineReader),
+    finishLineReader
+  )
 
   return captureList.map(capture => {
     return mapObjectforTable(capture, finishLineReader)
@@ -24,6 +27,8 @@ const createListWithRelevantEntries = (list, finishLineReader) => {
     if (indexInNewArray === -1) {
       newList.push(entry)
     } else {
+      // Sometimes runners reached the finish reader first and corridor start reader last. Probably cheaters or running backwards.
+      // Either way, conditional avoids the issue of finishline reader captures getting replaced in the final capturelist
       if (finishLineReader === entry.reader_id) {
         newList = replaceItemInArray(newList, indexInNewArray, entry)
       }

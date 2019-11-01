@@ -1,4 +1,4 @@
-export const CreateFinishCorridorTableColumns = [
+export const FinishCorridorTableColumns = [
   {
     width: 100,
     dataKey: 'number',

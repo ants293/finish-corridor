@@ -5,7 +5,7 @@ import VirtualizedTable from '../shared/VirtualizedTable/VirtualizedTable'
 import { CreateFinishCorridorList } from './FinishCorridorList/CreateFinishCorridorList'
 import { isTabInactive, visibilityChange } from '../../Utilities/TabVisiblityHandler'
 import { closeSocketConnection, openSocketConnection } from '../../config/Websocket'
-import { CreateFinishCorridorTableColumns } from './CreateFinishCorridorTableColumns'
+import { FinishCorridorTableColumns } from './FinishCorridorTableColumns'
 
 const FinishCorridor = (props) => {
   const { capturesList, readers, setReadersWatcher, setCapturesWatcher } = props
@@ -24,7 +24,7 @@ const FinishCorridor = (props) => {
   return (
     <VirtualizedTable
       options={{
-        columnValues: CreateFinishCorridorTableColumns,
+        columnValues: FinishCorridorTableColumns,
         list: mappedCapturesList,
         rowHeight: 48,
         headerHeight: 48,
