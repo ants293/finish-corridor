@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import TableCell from '@material-ui/core/TableCell'
 import withStyles from '@material-ui/core/styles/withStyles'
-import { VirtualizedTableMuiStyles } from '../styles/VirtualizedTableMuiStyles'
+import { VirtualizedTableStyles } from '../styles/VirtualizedTable.styles'
 
 function VirtualizedColumn (options) {
   const { cellData, rowHeight, classes } = options
@@ -28,4 +28,4 @@ VirtualizedColumn.propTypes = {
   })
 }
 
-export default withStyles(VirtualizedTableMuiStyles)(VirtualizedColumn)
+export default withStyles(VirtualizedTableStyles)(VirtualizedColumn)

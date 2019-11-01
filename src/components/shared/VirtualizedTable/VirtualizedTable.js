@@ -5,7 +5,7 @@ import { AutoSizer, Column, Table } from 'react-virtualized'
 import VirtualizedColumn from './VirtualizedColumn/VirtualizedColumn'
 import VirtualizedHeader from './VirtualizedHeader/VirtualizedHeader'
 import withStyles from '@material-ui/core/styles/withStyles'
-import { VirtualizedTableMuiStyles } from './styles/VirtualizedTableMuiStyles'
+import { VirtualizedTableStyles } from './styles/VirtualizedTable.styles'
 import 'react-virtualized/styles.css'
 
 function VirtualizedTable ({ options, classes }) {
@@ -16,7 +16,7 @@ function VirtualizedTable ({ options, classes }) {
   }
 
   return (
-    <div style={{ height: '100vh' }}>
+    <div className={classes.tableWrapper} style={{  }}>
       <AutoSizer>
         {({ height, width }) => (
           <Table
@@ -77,4 +77,4 @@ VirtualizedTable.propTypes = {
   }).isRequired
 }
 
-export default withStyles(VirtualizedTableMuiStyles)(VirtualizedTable)
+export default withStyles(VirtualizedTableStyles)(VirtualizedTable)

@@ -1,4 +1,9 @@
-export const VirtualizedTableMuiStyles = theme => ({
+export const VirtualizedTableStyles = theme => ({
+  tableWrapper: {
+    width: 600,
+    margin: '0 auto',
+    height: '100vh'
+  },
   table: {
     '& .ReactVirtualized__Table__rowColumn, & .ReactVirtualized__Table__headerColumn': {
       marginRight: '0px!important'

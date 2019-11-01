@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Typography } from '@material-ui/core'
 import withStyles from '@material-ui/core/styles/withStyles'
-import { VirtualizedTableMuiStyles } from '../styles/VirtualizedTableMuiStyles'
+import { VirtualizedTableStyles } from '../styles/VirtualizedTable.styles'
 import TableCell from '@material-ui/core/TableCell'
 
 function VirtualizedHeader (options) {
@@ -26,4 +26,4 @@ VirtualizedHeader.propTypes = {
   })
 }
 
-export default withStyles(VirtualizedTableMuiStyles)(VirtualizedHeader)
+export default withStyles(VirtualizedTableStyles)(VirtualizedHeader)
