@@ -11,7 +11,7 @@ function VirtualizedColumn (options) {
   return (
     <TableCell
       component="div"
-      style={{ height: rowHeight }}
+      style={{ height: '100%' }}
       className={`${classes.tableCell}`}
     >
       {cellData}

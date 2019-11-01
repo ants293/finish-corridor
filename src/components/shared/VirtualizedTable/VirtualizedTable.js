@@ -16,7 +16,7 @@ function VirtualizedTable ({ options, classes }) {
   }
 
   return (
-    <div className={classes.tableWrapper} style={{  }}>
+    <div className={classes.tableWrapper}>
       <AutoSizer>
         {({ height, width }) => (
           <Table
@@ -64,6 +64,7 @@ const createColumns = (list, columnValues, columnSizes) => {
 }
 
 VirtualizedTable.propTypes = {
+  classes: PropTypes.object.isRequired,
   options: PropTypes.shape({
     list: PropTypes.array.isRequired,
     headerHeight: PropTypes.number.isRequired,
