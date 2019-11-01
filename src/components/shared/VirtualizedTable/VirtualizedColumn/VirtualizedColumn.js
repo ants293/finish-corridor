@@ -6,12 +6,11 @@ import withStyles from '@material-ui/core/styles/withStyles'
 import { VirtualizedTableStyles } from '../styles/VirtualizedTable.styles'
 
 function VirtualizedColumn (options) {
-  const { cellData, rowHeight, classes } = options
+  const { cellData, classes } = options
 
   return (
     <TableCell
       component="div"
-      style={{ height: '100%' }}
       className={`${classes.tableCell}`}
     >
       {cellData}

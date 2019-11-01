@@ -32,7 +32,8 @@ export const VirtualizedTableStyles = theme => ({
     display: 'flex',
     flex: 1,
     backgroundColor: '#ececec',
-    alignItems: 'center'
+    alignItems: 'center',
+    height: '100%'
   },
   tableHeaderCell: {
     textTransform: 'capitalize',
