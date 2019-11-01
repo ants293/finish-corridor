@@ -14,7 +14,7 @@ export const VirtualizedTableStyles = theme => ({
       backgroundColor: theme.palette.primary.main
     },
     '& .ReactVirtualized__Table__row': {
-      paddingRight: '20px!important'
+      paddingRight: '0!important'
     },
     '& .ReactVirtualized__Table__rowColumn:first-of-type, ': {
       marginLeft: 0
