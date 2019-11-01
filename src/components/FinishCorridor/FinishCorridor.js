@@ -26,8 +26,9 @@ const FinishCorridor = (props) => {
       options={{
         columnValues: CreateFinishCorridorTableColumns,
         list: mappedCapturesList,
-        rowHeight: 20,
-        headerHeight: 20
+        rowHeight: 48,
+        headerHeight: 48,
+        tableWidth: 600
       }}
     />
   )

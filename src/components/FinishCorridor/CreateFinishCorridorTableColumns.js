@@ -5,7 +5,7 @@ export const CreateFinishCorridorTableColumns = [
     label: 'Number'
   },
   {
-    width: 100,
+    width: 200,
     dataKey: 'name',
     label: 'Athlete'
   },

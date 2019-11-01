@@ -4,9 +4,15 @@ import PropTypes from 'prop-types'
 import { AutoSizer, Column, Table } from 'react-virtualized'
 import VirtualizedColumn from './VirtualizedColumn/VirtualizedColumn'
 import VirtualizedHeader from './VirtualizedHeader/VirtualizedHeader'
+import withStyles from '@material-ui/core/styles/withStyles'
+import { VirtualizedTableMuiStyles } from './styles/VirtualizedTableMuiStyles'
 
-export default function VirtualizedTable ({ options }) {
-  const { list, headerHeight, rowHeight, columnValues } = options
+function VirtualizedTable ({ options, classes }) {
+  const { list, headerHeight, rowHeight, columnValues, tableWidth } = options
+  const columnSizes = {
+    headerHeight,
+    rowHeight
+  }
 
   return (
     <div style={{ height: '100vh' }}>
@@ -14,13 +20,14 @@ export default function VirtualizedTable ({ options }) {
         {({ height, width }) => (
           <Table
             height={height}
-            width={width}
+            width={tableWidth ? tableWidth : width}
             rowHeight={rowHeight}
             headerHeight={headerHeight}
+            className={classes.table}
             rowCount={list.length}
             rowGetter={({ index }) => list[index]}
           >
-            {createColumns(list, columnValues)}
+            {createColumns(list, columnValues, columnSizes)}
           </Table>
         )}
       </AutoSizer>
@@ -28,7 +35,7 @@ export default function VirtualizedTable ({ options }) {
   )
 }
 
-const createColumns = (list, columnValues) => {
+const createColumns = (list, columnValues, columnSizes) => {
   return columnValues.map(({ dataKey, width }) => {
     return (
       <Column
@@ -37,15 +44,17 @@ const createColumns = (list, columnValues) => {
         key={dataKey}
         width={width}
         headerRenderer={headerProps => (
-          VirtualizedHeader({
-            ...headerProps
-          })
+          <VirtualizedHeader
+            headerHeight={columnSizes.headerHeight}
+            label={headerProps.label}
+          />
         )}
         cellRenderer = {
           ({ cellData }) => (
-            VirtualizedColumn({
-              cellData
-            })
+            <VirtualizedColumn
+              cellData={cellData}
+              rowHeight={columnSizes.rowHeight}
+            />
           )
         }
       />
@@ -58,6 +67,7 @@ VirtualizedTable.propTypes = {
     list: PropTypes.array.isRequired,
     headerHeight: PropTypes.number.isRequired,
     rowHeight: PropTypes.number.isRequired,
+    tableWidth: PropTypes.number,
     columnValues: PropTypes.arrayOf(PropTypes.shape({
       width: PropTypes.number.isRequired,
       dataKey: PropTypes.string.isRequired,
@@ -65,3 +75,5 @@ VirtualizedTable.propTypes = {
     })).isRequired
   }).isRequired
 }
+
+export default withStyles(VirtualizedTableMuiStyles)(VirtualizedTable)

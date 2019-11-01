@@ -1,10 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-export default function VirtualizedColumn (options) {
-  const { cellData } = options
+import TableCell from '@material-ui/core/TableCell'
+import withStyles from '@material-ui/core/styles/withStyles'
+import { VirtualizedTableMuiStyles } from '../styles/VirtualizedTableMuiStyles'
+
+function VirtualizedColumn (options) {
+  const { cellData, rowHeight, classes } = options
+
   return (
-    <div>{cellData}</div>
+    <TableCell
+      component="div"
+      style={{ height: rowHeight }}
+      className={`${classes.tableCell}`}
+    >
+      {cellData}
+    </TableCell>
   )
 }
 
@@ -16,3 +27,5 @@ VirtualizedColumn.propTypes = {
     ])
   })
 }
+
+export default withStyles(VirtualizedTableMuiStyles)(VirtualizedColumn)
