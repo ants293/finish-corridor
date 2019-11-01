@@ -1,8 +1,11 @@
-
-export const VirtualizedTableMuiStyles = () => ({
+export const VirtualizedTableMuiStyles = theme => ({
   table: {
     '& .ReactVirtualized__Table__rowColumn, & .ReactVirtualized__Table__headerColumn': {
-      marginRight: '0px !important'
+      marginRight: '0px!important'
+    },
+    '& .ReactVirtualized__Table__headerRow': {
+      paddingRight: '0!important',
+      backgroundColor: theme.palette.primary.main
     }
   },
   tableCell: {
@@ -13,6 +16,7 @@ export const VirtualizedTableMuiStyles = () => ({
   },
   tableHeaderCell: {
     textTransform: 'capitalize',
-    fontWeight: 600
+    fontWeight: 600,
+    color: '#fff'
   }
 })

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React, { useEffect } from 'react'
 
 import VirtualizedTable from '../shared/VirtualizedTable/VirtualizedTable'
-import { CreateFinishCorridorList } from './CreateFinishCorridorList'
+import { CreateFinishCorridorList } from './FinishCorridorList/CreateFinishCorridorList'
 import { isTabInactive, visibilityChange } from '../../Utilities/TabVisiblityHandler'
 import { closeSocketConnection, openSocketConnection } from '../../config/Websocket'
 import { CreateFinishCorridorTableColumns } from './CreateFinishCorridorTableColumns'
@@ -43,7 +43,6 @@ FinishCorridor.propTypes = {
 
 const handleChangeInTabVisibility = () => {
   const inactiveTab = isTabInactive()
-  console.log('handled')
 
   inactiveTab ? closeSocketConnection() : openSocketConnection()
 }

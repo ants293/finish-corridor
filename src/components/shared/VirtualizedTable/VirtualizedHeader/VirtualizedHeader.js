@@ -9,7 +9,13 @@ function VirtualizedHeader (options) {
   const { label, classes } = options
   return (
     <TableCell className={classes.tableCell} >
-      <Typography className={classes.tableHeaderCell} align="left" fontWeight={600}>{label}</Typography>
+      <Typography
+        className={classes.tableHeaderCell}
+        align="left"
+        fontWeight={600}
+      >
+        {label}
+      </Typography>
     </TableCell>
   )
 }

@@ -6,6 +6,7 @@ import VirtualizedColumn from './VirtualizedColumn/VirtualizedColumn'
 import VirtualizedHeader from './VirtualizedHeader/VirtualizedHeader'
 import withStyles from '@material-ui/core/styles/withStyles'
 import { VirtualizedTableMuiStyles } from './styles/VirtualizedTableMuiStyles'
+import 'react-virtualized/styles.css'
 
 function VirtualizedTable ({ options, classes }) {
   const { list, headerHeight, rowHeight, columnValues, tableWidth } = options
@@ -20,7 +21,7 @@ function VirtualizedTable ({ options, classes }) {
         {({ height, width }) => (
           <Table
             height={height}
-            width={tableWidth ? tableWidth : width}
+            width={tableWidth || width}
             rowHeight={rowHeight}
             headerHeight={headerHeight}
             className={classes.table}
