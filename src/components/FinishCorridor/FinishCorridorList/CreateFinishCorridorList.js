@@ -7,11 +7,11 @@ export const CreateFinishCorridorList = (initialCapturesList, finishLineReader) 
     return initialCapturesList
   }
 
-  const captureList = createListWithRelevantEntries([...initialCapturesList], finishLineReader)
+  const captureList = orderList(createListWithRelevantEntries([...initialCapturesList], finishLineReader), finishLineReader)
 
-  return orderList(captureList.map(capture => {
+  return captureList.map(capture => {
     return mapObjectforTable(capture, finishLineReader)
-  }))
+  })
 }
 
 const createListWithRelevantEntries = (list, finishLineReader) => {
@@ -33,12 +33,19 @@ const createListWithRelevantEntries = (list, finishLineReader) => {
   return newList
 }
 
-const orderList = (list) => {
+const orderList = (list, finishLineReader) => {
   return list.sort((a, b) => {
-    if (!b.time) {
+    // All captures with no finish line readers to the top.
+    // If both dont have it, compare their dates, otherwise just compare the dates of every item that does.
+    if (b.reader_id !== finishLineReader && a.reader_id === finishLineReader) {
       return 1
+    } else if (a.reader_id !== finishLineReader && b.reader_id === finishLineReader) {
+      return -1
+    } else if (a.reader_id !== finishLineReader && b.reader_id !== finishLineReader) {
+      return new Date(b.captured) - new Date(a.captured)
     }
-    return new Date(a.time) - new Date(b.time)
+
+    return new Date(a.captured) - new Date(b.captured)
   })
 }
 
@@ -46,7 +53,7 @@ const mapObjectforTable = (capture, finishLineReader) => {
   return {
     number: capture.athlete.number,
     name: capture.athlete.name,
-    time: capture.reader_id === finishLineReader ? capture.captured : null,
+    time: capture.reader_id === finishLineReader ? moment(capture.captured).format('HH:mm:ss') : null,
     readerId: capture.reader_id
   }
 }
