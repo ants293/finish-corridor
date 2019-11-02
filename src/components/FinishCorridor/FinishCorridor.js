@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React, { useEffect } from 'react'
+import React, { Fragment, useEffect } from 'react'
 
 import VirtualizedTable from '../shared/VirtualizedTable/VirtualizedTable'
 import { CreateFinishCorridorList } from './FinishCorridorList/CreateFinishCorridorList'
@@ -8,41 +8,57 @@ import { closeSocketConnection, openSocketConnection } from '../../config/Websoc
 import { FinishCorridorTableColumns } from './FinishCorridorTableColumns'
 
 const FinishCorridor = (props) => {
-  const { capturesList, readers, setReadersWatcher, setCapturesWatcher } = props
+  const {
+    capturesList,
+    readers,
+    setReadersWatcher,
+    setCapturesWatcher,
+    listIsActivelyUpdating,
+    setListUpdatingToPaused
+  } = props
   const finishLineReaderId = readers.length ? readers[1].id : null
   const mappedCapturesList = CreateFinishCorridorList(capturesList, finishLineReaderId)
 
   useEffect(() => {
     setReadersWatcher()
     setCapturesWatcher()
-    document.addEventListener(visibilityChange, handleChangeInTabVisibility)
+    document.addEventListener(visibilityChange, () => handleChangeInTabVisibility(setListUpdatingToPaused))
     return () => {
       document.removeEventListener(visibilityChange, handleChangeInTabVisibility)
     }
-  }, [setCapturesWatcher, setReadersWatcher])
+  }, [setCapturesWatcher, setListUpdatingToPaused, setReadersWatcher])
 
   return (
-    <VirtualizedTable
-      options={{
-        columnValues: FinishCorridorTableColumns,
-        list: mappedCapturesList,
-        rowHeight: 48,
-        headerHeight: 48,
-        tableWidth: 600
-      }}
-    />
+    <Fragment>
+      {!listIsActivelyUpdating ? <div>Syncing the list with current values...</div> : null}
+      <VirtualizedTable
+        options={{
+          columnValues: FinishCorridorTableColumns,
+          list: mappedCapturesList,
+          rowHeight: 48,
+          headerHeight: 48,
+          tableWidth: 600
+        }}
+      />
+    </Fragment>
   )
 }
 
 FinishCorridor.propTypes = {
-  capturesList: PropTypes.array,
-  readers: PropTypes.array,
-  setReadersWatcher: PropTypes.func,
-  setCapturesWatcher: PropTypes.func
+  capturesList: PropTypes.array.isRequired,
+  readers: PropTypes.array.isRequired,
+  setReadersWatcher: PropTypes.func.isRequired,
+  setCapturesWatcher: PropTypes.func.isRequired,
+  listIsActivelyUpdating: PropTypes.bool.isRequired,
+  setListUpdatingToPaused: PropTypes.func.isRequired
 }
 
-const handleChangeInTabVisibility = () => {
+const handleChangeInTabVisibility = (setListUpdatingToPaused) => {
   const inactiveTab = isTabInactive()
+
+  if (inactiveTab) {
+    setListUpdatingToPaused()
+  }
 
   inactiveTab ? closeSocketConnection() : openSocketConnection()
 }

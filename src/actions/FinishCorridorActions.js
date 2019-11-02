@@ -1,11 +1,7 @@
-import { UPDATE_FINISH_CORRIDOR, UPDATE_READERS } from '../types/FinishCorridorTypes'
+import { FINISH_CORRIDOR_UPDATING_PAUSED, UPDATE_FINISH_CORRIDOR, UPDATE_READERS } from '../types/FinishCorridorTypes'
 import { socket } from '../config/Websocket'
 
 const setCapturesWatcher = (dispatch) => {
-  socket.on('connect', () => {
-    console.log('connected')
-  })
-
   socket.on('captures', (data) => {
     dispatch({
       type: UPDATE_FINISH_CORRIDOR,
@@ -23,4 +19,10 @@ const setReadersWatcher = (dispatch) => {
   })
 }
 
-export { setCapturesWatcher, setReadersWatcher }
+const setListUpdatingToPaused = (dispatch) => {
+  dispatch({
+    type: FINISH_CORRIDOR_UPDATING_PAUSED
+  })
+}
+
+export { setCapturesWatcher, setReadersWatcher, setListUpdatingToPaused }
