@@ -6,6 +6,7 @@ import { CreateFinishCorridorList } from './FinishCorridorList/CreateFinishCorri
 import { isTabInactive, visibilityChange } from '../../Utilities/TabVisiblityHandler'
 import { closeSocketConnection, openSocketConnection } from '../../config/Websocket'
 import { FinishCorridorTableColumns } from './FinishCorridorTableColumns'
+import { GenericSnackbar } from '../shared/Snackbar/GenericSnackbar'
 
 const FinishCorridor = (props) => {
   const {
@@ -16,8 +17,10 @@ const FinishCorridor = (props) => {
     listIsActivelyUpdating,
     setListUpdatingToPaused
   } = props
+
   const finishLineReaderId = readers.length ? readers[1].id : null
   const mappedCapturesList = CreateFinishCorridorList(capturesList, finishLineReaderId)
+  const raceOngoing = mappedCapturesList.some(capture => capture.readerId !== finishLineReaderId)
 
   useEffect(() => {
     setReadersWatcher()
@@ -30,7 +33,11 @@ const FinishCorridor = (props) => {
 
   return (
     <Fragment>
-      {!listIsActivelyUpdating ? <div>Syncing the list with current values...</div> : null}
+      <GenericSnackbar
+        open={!listIsActivelyUpdating && raceOngoing}
+        message={'Updating the list with current values. Please wait...'}
+        variant={'info'}
+      />
       <VirtualizedTable
         options={{
           columnValues: FinishCorridorTableColumns,
