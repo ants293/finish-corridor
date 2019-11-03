@@ -5,7 +5,7 @@ import TableCell from '@material-ui/core/TableCell'
 import withStyles from '@material-ui/core/styles/withStyles'
 import { VirtualizedTableStyles } from '../styles/VirtualizedTable.styles'
 
-function VirtualizedColumn (options) {
+const VirtualizedColumn = (options) => {
   const { cellData, classes } = options
 
   return (

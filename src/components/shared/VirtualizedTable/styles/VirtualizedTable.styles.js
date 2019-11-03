@@ -1,4 +1,4 @@
-export const VirtualizedTableStyles = theme => ({
+const VirtualizedTableStyles = theme => ({
   tableWrapper: {
     width: 600,
     margin: '0 auto',
@@ -41,3 +41,5 @@ export const VirtualizedTableStyles = theme => ({
     color: '#fff'
   }
 })
+
+export { VirtualizedTableStyles }

@@ -5,7 +5,7 @@ import withStyles from '@material-ui/core/styles/withStyles'
 import { VirtualizedTableStyles } from '../styles/VirtualizedTable.styles'
 import TableCell from '@material-ui/core/TableCell'
 
-function VirtualizedHeader (options) {
+const VirtualizedHeader = (options) => {
   const { label, classes } = options
   return (
     <TableCell>

@@ -8,7 +8,7 @@ import withStyles from '@material-ui/core/styles/withStyles'
 import { VirtualizedTableStyles } from './styles/VirtualizedTable.styles'
 import 'react-virtualized/styles.css'
 
-function VirtualizedTable ({ options, classes }) {
+const VirtualizedTable = ({ options, classes }) => {
   const { list, headerHeight, rowHeight, columnValues, tableWidth } = options
   const columnSizes = {
     headerHeight,

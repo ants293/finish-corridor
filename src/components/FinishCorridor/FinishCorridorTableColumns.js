@@ -1,4 +1,4 @@
-export const FinishCorridorTableColumns = [
+const FinishCorridorTableColumns = [
   {
     width: 100,
     dataKey: 'number',
@@ -15,3 +15,5 @@ export const FinishCorridorTableColumns = [
     label: 'Finish time'
   }
 ]
+
+export { FinishCorridorTableColumns }

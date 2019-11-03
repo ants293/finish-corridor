@@ -1,6 +1,6 @@
 import makeStyles from '@material-ui/core/styles/makeStyles'
 
-export const SnackbarStyles = makeStyles(theme => ({
+const SnackbarStyles = makeStyles(theme => ({
   info: {
     backgroundColor: theme.palette.primary.main
   },
@@ -13,3 +13,5 @@ export const SnackbarStyles = makeStyles(theme => ({
     verticalAlign: 'middle'
   }
 }))
+
+export { SnackbarStyles }

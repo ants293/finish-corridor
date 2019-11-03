@@ -2,7 +2,7 @@ import moment from 'moment'
 
 import { replaceItemInArray } from '../../../utilities/Utilities'
 
-export const CreateFinishCorridorList = (initialCapturesList, finishLineReader) => {
+const CreateFinishCorridorList = (initialCapturesList, finishLineReader) => {
   if (!finishLineReader || !initialCapturesList.length) {
     return initialCapturesList
   }
@@ -13,7 +13,7 @@ export const CreateFinishCorridorList = (initialCapturesList, finishLineReader) 
   )
 
   return captureList.map(capture => {
-    return mapObjectforTable(capture, finishLineReader)
+    return mapCaptureItemForTable(capture, finishLineReader)
   })
 }
 
@@ -54,7 +54,7 @@ const orderList = (list, finishLineReader) => {
   })
 }
 
-const mapObjectforTable = (capture, finishLineReader) => {
+const mapCaptureItemForTable = (capture, finishLineReader) => {
   return {
     number: capture.athlete.number,
     name: capture.athlete.name,
@@ -62,3 +62,5 @@ const mapObjectforTable = (capture, finishLineReader) => {
     readerId: capture.reader_id
   }
 }
+
+export { CreateFinishCorridorList }
