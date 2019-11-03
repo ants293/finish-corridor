@@ -8,7 +8,9 @@ import TableCell from '@material-ui/core/TableCell'
 const VirtualizedHeader = (options) => {
   const { label, classes } = options
   return (
-    <TableCell>
+    <TableCell
+      component="div"
+    >
       <Typography
         className={classes.tableHeaderCell}
         align="left"
