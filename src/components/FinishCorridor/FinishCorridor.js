@@ -3,7 +3,7 @@ import React, { Fragment, useEffect } from 'react'
 
 import VirtualizedTable from '../shared/VirtualizedTable/VirtualizedTable'
 import { CreateFinishCorridorList } from './FinishCorridorList/CreateFinishCorridorList'
-import { isTabInactive, visibilityChange } from '../../Utilities/TabVisiblityHandler'
+import { isTabInactive, visibilityChange } from '../../utilities/TabVisiblityHandler'
 import { closeSocketConnection, openSocketConnection } from '../../config/Websocket'
 import { FinishCorridorTableColumns } from './FinishCorridorTableColumns'
 import { GenericSnackbar } from '../shared/Snackbar/GenericSnackbar'

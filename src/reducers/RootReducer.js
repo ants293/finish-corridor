@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
-import FinishCorridorReducer from './FinishCorridorReducer'
+import finishCorridor from './FinishCorridorReducer'
 
 export default combineReducers({
-  finishCorridor: FinishCorridorReducer
+  finishCorridor
 })

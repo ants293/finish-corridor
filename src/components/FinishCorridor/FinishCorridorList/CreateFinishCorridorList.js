@@ -1,6 +1,6 @@
 import moment from 'moment'
 
-import { replaceItemInArray } from '../../../Utilities/Utilities'
+import { replaceItemInArray } from '../../../utilities/Utilities'
 
 export const CreateFinishCorridorList = (initialCapturesList, finishLineReader) => {
   if (!finishLineReader || !initialCapturesList.length) {
